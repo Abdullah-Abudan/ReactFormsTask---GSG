@@ -1,0 +1,27 @@
+.mid-position{
+    position: relative;
+    top:111px;
+  }
+  
+  .endquotes{
+    padding-top: 27px;
+    text-align: right;
+    
+  }
+  .quotes-p{
+    font-family: 'Inter';
+    font-style: italic;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 38px;
+}
+.name{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 38px;
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+}
