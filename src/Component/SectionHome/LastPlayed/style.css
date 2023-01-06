@@ -1,0 +1,8 @@
+.Lastplayed{
+  padding: 20px;
+}
+.playedFlex{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+  }

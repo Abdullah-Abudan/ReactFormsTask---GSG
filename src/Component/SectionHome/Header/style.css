@@ -1,0 +1,24 @@
+div.user{
+    display: flex;
+    align-items: center; 
+    justify-content: flex-end;
+    gap: 15px;   
+ }
+ .user p{
+   font-family: 'Inter';
+   font-style: normal;
+   font-weight: 400;
+   font-size: 35px;
+   line-height: 42px;
+   text-align: right;
+   color: #000000;  
+ }
+ .user span{
+   display: block;
+   text-align: right;
+ }
+ @media (max-width:1400px) {
+  .user p{
+    font-size: 22px;
+  }
+}

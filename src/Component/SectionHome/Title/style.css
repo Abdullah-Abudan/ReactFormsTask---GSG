@@ -1,0 +1,12 @@
+h2.title{
+    font-family: 'Gilroy';
+    color: #000000 ;
+    font-size: 35px;
+    font-weight: 800;
+    line-height: 43px;
+  }
+  @media (min-width:1200px) {
+    h2.title{
+      font-size: 25px;
+    }
+  }

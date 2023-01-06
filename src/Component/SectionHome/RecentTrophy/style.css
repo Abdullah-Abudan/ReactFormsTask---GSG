@@ -1,0 +1,64 @@
+.trophy-img{
+  background: #32FB00;
+  box-shadow: 0px 0px 567px #32FB00, 0px 0px 324px #32FB00, 0px 0px 189px #32FB00, 0px 0px 94.5px #32FB00, 0px 0px 27px #32FB00, 0px 0px 13.5px #32FB00;
+  border-radius: 50%;
+}  
+.trophy-img img{
+  width: 70px ;
+}
+@media (min-width:1400px) {
+  .trophy-img img{
+    width: auto;
+  }
+}
+.descr-trophy{
+  font-family: 'Gilroy';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: right;
+  text-transform: uppercase;
+  color: #FFFFFF; 
+  position:absolute;
+  top:15px;
+  right:80px;
+}
+.descr-trophy span{
+  font-size: 10px;
+}
+@media (min-width:1400px) {
+  .descr-trophy{
+    top:23px;
+    right:170px;
+    font-size: 25px;
+    line-height: 31px;
+  }
+  .descr-trophy span{
+    font-size: 19px;
+  }
+
+}
+@media (min-width:1400px) {
+  .opacity-trophy{
+    height:118px;
+    border-radius: 0px 0px 45px 45px !important;
+  }
+}
+.opacity-trophy{
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), radial-gradient(97.57% 210.75% at 0.9% 2.98%, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+  opacity: 0.7;
+  backdrop-filter: blur(5px);
+  border-radius: 0px 0px 19px 19px; 
+  height:50px;
+}
+.re-descr-trophy{
+  font-family: 'Gilroy';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: right;
+  text-transform: uppercase;
+  color: #FFFFFF; 
+}

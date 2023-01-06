@@ -1,0 +1,5 @@
+.gamming-flex{
+    display: flex;
+    gap:50px;
+    position: relative;
+  }

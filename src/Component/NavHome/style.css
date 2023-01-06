@@ -1,0 +1,50 @@
+.container-NavHome{
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+div img{
+    cursor: pointer;
+ }
+ div.icon{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 20px;
+ }
+ .moon-sun{
+    display: flex;
+    flex-direction: column;
+    padding: 17px 9px;
+    gap: 20px;
+    background: #C1C1C1;
+    border-radius: 60px;        
+}
+.container-NavHome::after{
+    content: "";
+    position: absolute;
+    width: 9px;
+    height: 948px;
+    top: 60px;
+    right: 10px;
+    border-radius: 38px;
+    background-color: #FFFFFF;
+    box-shadow: inset 2px 4px 4px rgba(0, 0, 0, 0.25);
+}
+@media (max-width:1400px) {
+
+    div.icon{
+        align-items: center;
+    }
+    .moon-sun{
+        width: 58px;
+        height: 220px;
+    }
+    .moon-sun{
+        width: 60px;
+        height: 134px;
+    }
+  }
