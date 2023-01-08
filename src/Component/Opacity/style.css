@@ -1,0 +1,6 @@
+.opacity-bg{
+    background-image: linear-gradient(rgba(21,101,216,0.9), rgba(21,101,216,0.9)), url("../../Images/bgLeftSignup.svg") ;
+    background-position: center bottom;
+    background-size: cover;
+    width: 35%;
+}
