@@ -4,6 +4,7 @@ import LSLogIn from "../Component/Left-Side-Login/index";
 import TextRightTop from "../Component/TextRightTop"
 import SocialMedia from "../Component/DivSocialMedia";
 import Register from "../Component/Register";
+import { Navigate } from "react-router-dom";
 // img
 import google from "../Images/googleRigthLogIn.svg";
 import twitter from "../Images/twitterRigthLogIn.svg";
@@ -22,6 +23,8 @@ export default class LogIn extends Component {
   state = {
     email: "",
     password: "",
+    error:"",
+    isLoggingIn:false,
   };
 
   handleChangeInput = (event) => {
@@ -31,10 +34,17 @@ export default class LogIn extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+
+    if(this.state.email === "abdullah-dan@outlook.com" && this.state.password ==="2000")
+    this.setState({isLoggingIn:true});
+    else
+    this.setState({ error: 'login failed' });
+
     this.setState((prevState) => ({
       dataToBeSent: {
         email: prevState.email,
         password: prevState.password,
+        isLoggingIn:prevState.isLoggingIn,
       },
       ...defaults,
     }));
@@ -95,7 +105,7 @@ export default class LogIn extends Component {
               </div>
               <div>
                 <label htmlFor="password">Enter your password</label>
-                <div style={{position: "relative", marginBottom: "40px"}}>
+                <div style={{position: "relative"}}>
                   <input
                     type="password"
                     required
@@ -112,7 +122,10 @@ export default class LogIn extends Component {
                     onClick={this.ViewPassword}
                   />
                 </div>
+                <div style={{paddingTop:"10px",paddingBottom:'10px',color:"red",fontWeight:"bold"}}>{this.state.error}</div>
+
                 <Button>Login</Button>
+                {this.state.isLoggingIn ? <Navigate to="/Home"/>:""}
                 <div
                   style={{
                     color: "#696F79",
@@ -120,7 +133,7 @@ export default class LogIn extends Component {
                     textAlign: "center",
                   }}
                 >
-                 <p> Don’t have an account?{" "}<Register/></p>
+                 <div> Don’t have an account?{" "}<Register/></div>
                 </div>
               </div>
             </form>

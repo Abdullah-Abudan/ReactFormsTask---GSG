@@ -173,13 +173,13 @@ export default class SignUp extends Component {
                 
                 <div style={{paddingTop:"10px",paddingBottom:'10px',color:"red",fontWeight:"bold"}} className="error">{this.state.error}</div>
                 <div className="check-align">
-                  <label htmlFor="check">I agree to terms & conditions</label>
                   <input
                     id="check"
                     type="checkbox"
                     checked={this.state.isSelect}
                     onChange={this.handleCheckboxChange}
                   />
+                  <label htmlFor="check">I agree to terms & conditions</label>
                 </div>
                 <Button>Register Account</Button>
                 <div
