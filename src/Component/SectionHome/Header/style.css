@@ -22,3 +22,12 @@ div.user{
     font-size: 22px;
   }
 }
+
+div.user.dark-border p{
+  color: white;
+
+}
+div.user .dark-border{
+  border: 2px solid white;
+  border-radius: 50%;
+}

@@ -32,3 +32,6 @@
       bottom: 25px;
     }
   }
+  .size-game.dark-border{
+    border: 2px solid white;
+  }

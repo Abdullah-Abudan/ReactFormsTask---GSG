@@ -15,6 +15,7 @@ const regularExpression =/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
 const message = 'Password must contain at least one number, one lowercase and one uppercase letter';
 
 const defaults = {
+  name: "",
   email: "",
   password: "",
   passwordRepeat: "",
@@ -22,6 +23,7 @@ const defaults = {
 };
 export default class SignUp extends Component {
   state = {
+    name: "",
     email: "",
     password: "",
     passwordRepeat: "",
@@ -37,14 +39,14 @@ export default class SignUp extends Component {
 
   checkPasswordStrength = () => {
     const password = this.state.password;
-    if (password.length >= 11) {
+    if (password.match(regularExpression) ) {
       this.setState({
         passwordStrength: '100%',
         passwordStrengthColor: 'green',
         passwordStrengthText: 'Password is strong',
         passwordStrengthTextColor: 'green'
       });
-    } else if (password.length >= 5 && password.length <= 8) {
+    } else if (password.length >= 4 && password.length <= 7) {
       this.setState({
         passwordStrength: '60%',
         passwordStrengthColor: '#FFC107',
@@ -83,9 +85,10 @@ export default class SignUp extends Component {
   };
 
   schema = object().shape({
+    name: string().required('Name is required '),
     email: string().email().required('Email is required '),
     password: string().matches(regularExpression, message).required('Password must be 8 characters or longer'), //.min(8,"password should be a minimum of 8 characters") لا داعي لها طالما موجودة الماتشز التي تحوي الريقيولر اكسبرجن الشاملة
-    passwordConfirmation: string().oneOf([ref("password")], "Your passwords do not match.").required('Passwords do not match!'),
+    passwordConfirmation: string().oneOf([ref("password")], "Your passwords do not match."),
     isChecked: boolean().oneOf([true], "it's false").required('required'), 
   });
 
@@ -96,6 +99,7 @@ export default class SignUp extends Component {
       .validate(
         {
           //I came with the Skima inside the Handle Submit and worked for it Validate, after giving it the values ​​of the inptus through the state
+          name: this.state.name,
           email: this.state.email,
           password: this.state.password,
           passwordconfirmation: this.state.passwordRepeat,
@@ -106,6 +110,7 @@ export default class SignUp extends Component {
       .then(() => {
         this.setState((prevState) => ({
           dataToBeSent: {
+            name: prevState.name,
             email: prevState.email,
             password: prevState.password,
             isSelect: prevState.isSelect,
@@ -133,6 +138,16 @@ export default class SignUp extends Component {
             <ContainerForm>
                 <TextRightTop p1="Register Individual Account!" p2="For the purpose of gamers regulation, your details are required."/>
               <form onSubmit={this.handleSubmit} >
+                <div>
+                  <label htmlFor="name">Name*</label>
+                  <input
+                    id="name"
+                    type="text"
+                    placeholder="Enter Your Name"
+                    value={this.state.name}
+                    onChange={this.handleChangeInput}
+                  />
+                </div>
                 <div>
                   <label htmlFor="email">Email address*</label>
                   <input

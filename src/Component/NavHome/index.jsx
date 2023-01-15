@@ -29,8 +29,8 @@ export default class NavHome extends Component{
                 </div>
 
                 <div className="moon-sun">
-                    <img src={sun} alt="sun" />                
-                    <img src={moon} alt="moon" />                
+                    <img src={sun} alt="sun" onClick={this.props.toggleDarkMode} />                
+                    <img src={moon} alt="moon" onClick={this.props.toggleDarkMode} />                
                 </div>
             </div>
         )

@@ -10,7 +10,7 @@ export default class RecentTrophy extends Component {
   render() {
     return (
       <div style={{width:this.props.width,padding:'20px',position:"relative",overflow: 'inherit'}} >
-        <Title title="most recent trophy" mb="20px"/>
+        <Title color={this.props.color} title="most recent trophy" mb="20px"/>
         <div style={{position:"relative",overflow:"hidden"}}>
           <img src={warriorGirlGame} alt="warriorGirlGame" style={{width:"100%"}} />
           <p className="descr-trophy">perfect KILL streak <br /> <span>You are in the 0.5%</span></p>

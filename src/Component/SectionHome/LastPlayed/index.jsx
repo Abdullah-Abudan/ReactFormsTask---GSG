@@ -13,7 +13,7 @@ export default class LastPlayed extends Component {
   render() {
     return (
       <div className="Lastplayed" style={{width:this.props.width}}>
-        <Title mb="20px" title="Last played"/>
+        <Title color={this.props.color} mb="20px" title="Last played"/>
         <div className="playedFlex">
           <Played photo={game1} descr="Hogwarts Legacy 50%"/>
           <Played photo={game2} descr="God Of War: Ragnarök 72.5%" />
