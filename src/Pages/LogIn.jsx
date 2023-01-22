@@ -5,14 +5,22 @@ import TextRightTop from "../Component/TextRightTop"
 import SocialMedia from "../Component/DivSocialMedia";
 import Register from "../Component/Register";
 import { Navigate } from "react-router-dom";
+import Button from "../Component/Button";
+import { object, string} from "yup";  // {object, string, ref} instead of (* as yup)
+
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+
 // img
 import google from "../Images/googleRigthLogIn.svg";
 import twitter from "../Images/twitterRigthLogIn.svg";
 import linkedin from "../Images/linkedinRigthLogIn.svg";
 import github from "../Images/githubRightLogIn.svg";
 import eye from "../Images/eyeRigthLogIn.svg";
-import Button from "../Component/Button";
 import line from "../Images/linetRigthLogIn.svg"
+
+const regularExpression =/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+const message = 'The password is incorrect';
 
 const defaults = {
   email: "",
@@ -31,12 +39,41 @@ export default class LogIn extends Component {
     const { value, id } = event.target;
     this.setState({ [id]: value }); 
   };
-
+  schema = object().shape({
+    email: string().email().required('The Email is incorrect'),
+    password: string().matches(regularExpression, message),
+  });
+  
   handleSubmit = (event) => {
     event.preventDefault();
+    this.schema
+    .validate(
+      {
+        email: this.state.email,
+        password: this.state.password,
+      },
+      { abortEarly: false }
+    )
+    .then(() => {
+      NotificationManager.success("Login successful.", "Success!");
+      this.setState((prevState) => ({
+        dataToBeSent: {
+          email: prevState.email,
+          password: prevState.password,
+          isLoggingIn:prevState.isLoggingIn,
+        },
+        ...defaults,
+      }));
+    })
+    .catch((err) => {
+      const errorMessage = err.errors.join(' & ');
+      NotificationManager.error(errorMessage, "Error!",6000);
+  });
 
-    if(this.state.email === "abdullah-dan@outlook.com" && this.state.password ==="2000")
+    if(this.state.email === "abdullah-dan@outlook.com" && this.state.password ==="*Abd2000"){
     this.setState({isLoggingIn:true});
+    this.props.login();
+  }
     else
     this.setState({ error: 'login failed' });
 
@@ -61,6 +98,7 @@ export default class LogIn extends Component {
   render() {
     return (
       <Container>
+        <NotificationContainer/>
         <div className="flex-side">
           <LSLogIn />
           <div style={{ padding:"0 40px"}}>
@@ -96,7 +134,6 @@ export default class LogIn extends Component {
                 <label htmlFor="email">Your email </label>
                 <input
                   type="email"
-                  required
                   placeholder="Write your email"
                   value={this.state.email}
                   onChange={this.handleChangeInput}
@@ -108,7 +145,6 @@ export default class LogIn extends Component {
                 <div style={{position: "relative"}}>
                   <input
                     type="password"
-                    required
                     placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
                     value={this.state.password}
                     onChange={this.handleChangeInput}
@@ -138,7 +174,7 @@ export default class LogIn extends Component {
               </div>
             </form>
           </div>
-        </div>
+        </div>     
       </Container>
     );
   }

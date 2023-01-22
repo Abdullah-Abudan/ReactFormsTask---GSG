@@ -7,14 +7,34 @@
   }
   
   .not-found-heading {
-    font-size: 3em;
-    color: #333;
+    margin: 24px 0;
+    font-size: 2em;
+    color: #626262;
     text-align: center;
-    margin-bottom: 0.5em;
+    font-family: cursive;
   }
-  
-  .not-found-text {
+  .not-found-btn {
     font-size: 1.5em;
     color: #666;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #222222;
+    border-radius: 40px;
+    padding: 10px;
+    transition: all .2s ease;
+  }
+  .not-found-btn:hover {
+    border: 3px solid #222222;
+  }
+  span.arrow {
+    display: flex;
+    align-items: center;
+    justify-content: baseline ;
+  }
+  span.not-found-txt {
+    padding: 0 8px;
+    color: #454444;
+    font-family: cursive;
   }
