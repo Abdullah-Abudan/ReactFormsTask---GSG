@@ -4,13 +4,13 @@ import LSLogIn from "../Component/Left-Side-Login/index";
 import TextRightTop from "../Component/TextRightTop"
 import SocialMedia from "../Component/DivSocialMedia";
 import Register from "../Component/Register";
-import { Navigate } from "react-router-dom";
 import Button from "../Component/Button";
 import { object, string} from "yup";  // {object, string, ref} instead of (* as yup)
 
 import { NotificationContainer, NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-
+import axios from "axios";
+import {BaseUrl} from "../Component/BaseUrl/index"
 // img
 import google from "../Images/googleRigthLogIn.svg";
 import twitter from "../Images/twitterRigthLogIn.svg";
@@ -19,8 +19,8 @@ import github from "../Images/githubRightLogIn.svg";
 import eye from "../Images/eyeRigthLogIn.svg";
 import line from "../Images/linetRigthLogIn.svg"
 
-const regularExpression =/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
-const message = 'The password is incorrect';
+// const regularExpression =/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/;
+// const message = 'The password is incorrect';
 
 const defaults = {
   email: "",
@@ -32,7 +32,7 @@ export default class LogIn extends Component {
     email: "",
     password: "",
     error:"",
-    isLoggingIn:false,
+    isLoading: false,
   };
 
   handleChangeInput = (event) => {
@@ -40,12 +40,15 @@ export default class LogIn extends Component {
     this.setState({ [id]: value }); 
   };
   schema = object().shape({
-    email: string().email().required('The Email is incorrect'),
-    password: string().matches(regularExpression, message),
+    email: string().email().required('Enter your Email'),
+    password: string().required('Enter your Password'),
   });
   
   handleSubmit = (event) => {
     event.preventDefault();
+    this.setState({ isLoading: true });
+    const myData ={email: this.state.email, password: this.state.password}
+
     this.schema
     .validate(
       {
@@ -54,13 +57,23 @@ export default class LogIn extends Component {
       },
       { abortEarly: false }
     )
-    .then(() => {
+    .then(async () => {
+      const res = await axios.post(`${BaseUrl}/login`,myData);
+      console.log(res);
+      if (res) {
+        this.setState({ isLoading: false });
+        localStorage.setItem("name", res.data.name);        
+        localStorage.setItem("token", res.data.token); // store the token in the localstorage
+        localStorage.setItem("email", res.data.email);
+        localStorage.setItem("Admin", res.data.isAdmin);        
+        this.props.Admin();
+        this.props.Login();
+      }
       NotificationManager.success("Login successful.", "Success!");
       this.setState((prevState) => ({
         dataToBeSent: {
           email: prevState.email,
           password: prevState.password,
-          isLoggingIn:prevState.isLoggingIn,
         },
         ...defaults,
       }));
@@ -69,22 +82,6 @@ export default class LogIn extends Component {
       const errorMessage = err.errors.join(' & ');
       NotificationManager.error(errorMessage, "Error!",6000);
   });
-
-    if(this.state.email === "abdullah-dan@outlook.com" && this.state.password ==="*Abd2000"){
-    this.setState({isLoggingIn:true});
-    this.props.login();
-  }
-    else
-    this.setState({ error: 'login failed' });
-
-    this.setState((prevState) => ({
-      dataToBeSent: {
-        email: prevState.email,
-        password: prevState.password,
-        isLoggingIn:prevState.isLoggingIn,
-      },
-      ...defaults,
-    }));
   };
   
   passwordInput = React.createRef(); //  reference to pass input
@@ -160,8 +157,7 @@ export default class LogIn extends Component {
                 </div>
                 <div style={{paddingTop:"10px",paddingBottom:'10px',color:"red",fontWeight:"bold"}}>{this.state.error}</div>
 
-                <Button>Login</Button>
-                {this.state.isLoggingIn ? <Navigate to="/Home"/>:""}
+                <Button>{this.state.isLoading ? "Loading...." : "Login"}</Button>
                 <div
                   style={{
                     color: "#696F79",

@@ -5,6 +5,12 @@ import TextRightTop from "../Component/TextRightTop"
 import ContainerForm from "../Component/ContainerForm";
 import { object, string, ref, boolean} from "yup";  // {object, string, ref} instead of (* as yup)
 import { Link } from "react-router-dom";
+
+import { NotificationContainer, NotificationManager } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+
+import axios from "axios";
+import {BaseUrl} from '../Component/BaseUrl/index'
 //       img
 import navigation from "../Images/navigationRigthSignUp.svg";
 import Button from "../Component/Button";
@@ -87,14 +93,16 @@ export default class SignUp extends Component {
   schema = object().shape({
     name: string().required('Name is required '),
     email: string().email().required('Email is required '),
-    password: string().matches(regularExpression, message).required('Password must be 8 characters or longer'), //.min(8,"password should be a minimum of 8 characters") لا داعي لها طالما موجودة الماتشز التي تحوي الريقيولر اكسبرجن الشاملة
+    password: string().matches(regularExpression, message), //.min(8,"password should be a minimum of 8 characters") لا داعي لها طالما موجودة الماتشز التي تحوي الريقيولر اكسبرجن الشاملة
     passwordConfirmation: string().oneOf([ref("password")], "Your passwords do not match."),
-    isChecked: boolean().oneOf([true], "it's false").required('required'), 
+    isChecked: boolean().oneOf([true], "Make sure you accept the terms of registration").required('required'), 
   });
 
   handleSubmit = (event) => {
     event.preventDefault(); //no refresh
     this.checkPasswordMatching();
+    const myData ={name: this.state.name, email: this.state.email, password: this.state.password}
+
     this.schema
       .validate(
         {
@@ -105,9 +113,18 @@ export default class SignUp extends Component {
           passwordconfirmation: this.state.passwordRepeat,
           isChecked: this.state.isSelect,
         },
-        { abortEarly: false }
+        { abortEarly: true }
       )
-      .then(() => {
+      .then(async () => {
+        const res = await axios.post(`${BaseUrl}/signup`,myData);
+        if (res) {
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("name", res.data.name);
+          this.setState({ isloading: false });
+          this.props.Login();
+        }
+        NotificationManager.success("Login successful.", "Success!");
+
         this.setState((prevState) => ({
           dataToBeSent: {
             name: prevState.name,
@@ -119,12 +136,16 @@ export default class SignUp extends Component {
           ...defaults,
         }));
       })
-      .catch((err) => console.log(err.errors));
+      .catch((err) =>{
+        const errorMessage = err.errors.join(' & ');
+        NotificationManager.error(errorMessage, "Error!",6000);
+      });
   };
 
   render() {
     return (
       <div className="flex-side">
+        <NotificationContainer/>
        <div style={{color:"white"}}></div>
         <LSSignUp />
         <Container>
