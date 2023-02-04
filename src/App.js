@@ -50,6 +50,8 @@ export default class App extends Component{
       Logout={this.Logout}
       Admin={this.state.isAdmin}
     />}>
+    
+    <Route index element={<Home />} /> {/*If you are logged in successfully, the home page will appear */}
     <Route path="profile" element={<Profile />} />
 
   <Route
