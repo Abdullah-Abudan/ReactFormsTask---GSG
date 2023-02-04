@@ -70,7 +70,7 @@ export default class LogIn extends Component {
       NotificationManager.error(errorMessage, "Error!",6000);
   });
 
-    if(this.state.email === "abdullah-dan@outlook.com" && this.state.password ==="*Abd2000"){
+    if(this.state.email === "admin@admin.com" && this.state.password ==="admin123"){
     this.setState({isLoggingIn:true});
     this.props.login();
   }
